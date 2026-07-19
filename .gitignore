@@ -1,0 +1,13 @@
+# Dépendances régénérables (npm install @etalab/decoupage-administratif)
+node_modules/
+data/package/
+data/dec.tgz
+
+# Fichiers temporaires LibreOffice / Excel
+.~lock.*#
+~$*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
