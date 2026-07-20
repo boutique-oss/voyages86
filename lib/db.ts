@@ -5,17 +5,29 @@ import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 
 let _sql: NeonQueryFunction<false, false> | null = null;
 
-// Initialisation paresseuse : on ne lit DATABASE_URL qu'au premier appel réel,
-// jamais au chargement du module (sinon le build Next.js échoue sans la variable).
+// L'intégration Neon de Vercel peut nommer la variable de plusieurs façons
+// (avec ou sans préfixe). On accepte les noms usuels, en priorité DATABASE_URL.
+function trouverUrl(): string | undefined {
+  return (
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL_UNPOOLED ||
+    process.env.POSTGRES_URL_NON_POOLING
+  );
+}
+
+// Initialisation paresseuse : on ne lit l'URL qu'au premier appel réel, jamais
+// au chargement du module (sinon le build Next.js échoue sans la variable).
 function client(): NeonQueryFunction<false, false> {
   if (_sql) return _sql;
-  if (!process.env.DATABASE_URL) {
+  const url = trouverUrl();
+  if (!url) {
     throw new Error(
-      "DATABASE_URL manquante. En local : la mettre dans .env.local. " +
-        "Sur Vercel : Settings → Environment Variables."
+      "URL de base introuvable. En local : DATABASE_URL dans .env.local. " +
+        "Sur Vercel : Settings → Environment Variables (DATABASE_URL ou POSTGRES_URL)."
     );
   }
-  _sql = neon(process.env.DATABASE_URL);
+  _sql = neon(url);
   return _sql;
 }
 
