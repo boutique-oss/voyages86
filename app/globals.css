@@ -1,0 +1,269 @@
+/* Palette : le fond reste gris, la couleur est réservée à la donnée (statut). */
+:root {
+  --visite: #0f766e;
+  --prevu: #d97706;
+  --a-visiter: #cbd5e1;
+  --encre: #1e293b;
+  --sourdine: #64748b;
+  --bordure: #e2e8f0;
+  --panneau: #ffffff;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font: 15px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--encre);
+  background: #f8fafc;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Panneau latéral --- */
+#panneau {
+  width: 340px;
+  flex: 0 0 340px;
+  background: var(--panneau);
+  border-right: 1px solid var(--bordure);
+  padding: 26px 24px;
+  overflow-y: auto;
+}
+h1 {
+  font-size: 20px;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+.sous-titre {
+  color: var(--sourdine);
+  font-size: 13px;
+  margin: 0 0 24px;
+}
+.bloc-titre {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sourdine);
+  margin: 0 0 12px;
+}
+.chiffre {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.chiffre small {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--sourdine);
+}
+.barre {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--a-visiter);
+  display: flex;
+  overflow: hidden;
+  margin: 12px 0 22px;
+}
+.barre span {
+  display: block;
+  height: 100%;
+}
+.seg-visite {
+  background: var(--visite);
+}
+.seg-prevu {
+  background: var(--prevu);
+}
+.legende {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.legende li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--bordure);
+  font-size: 14px;
+}
+.legende li:last-child {
+  border-bottom: 0;
+}
+.pastille {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  flex: 0 0 13px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+.legende .n {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--sourdine);
+}
+.note {
+  font-size: 12.5px;
+  color: var(--sourdine);
+  background: #f1f5f9;
+  border-left: 3px solid var(--bordure);
+  padding: 11px 13px;
+  border-radius: 0 6px 6px 0;
+}
+
+/* --- État de connexion (mot de passe) --- */
+.auth {
+  margin-bottom: 20px;
+  padding: 12px 13px;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+}
+.auth.ok {
+  border-color: var(--visite);
+  background: #f0fdfa;
+}
+.auth input {
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  font: inherit;
+  margin-top: 6px;
+}
+.auth button {
+  margin-top: 8px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--encre);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.auth .etat-ok {
+  color: var(--visite);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.auth a {
+  color: var(--sourdine);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* --- Carte --- */
+#carte {
+  flex: 1;
+  height: 100%;
+}
+.leaflet-tile-pane {
+  filter: grayscale(1) contrast(0.92) brightness(1.06);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}
+.leaflet-popup-content {
+  margin: 13px 15px;
+  font-size: 14px;
+  min-width: 210px;
+}
+.popup-nom {
+  font-weight: 600;
+  font-size: 15px;
+}
+.popup-code {
+  color: var(--sourdine);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 10px;
+}
+
+/* --- Éditeur de statut dans le popup --- */
+.edit-statuts {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 9px;
+}
+.edit-statuts button {
+  flex: 1;
+  padding: 6px 4px;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.edit-statuts button.actif {
+  color: #fff;
+  border-color: transparent;
+  font-weight: 600;
+}
+.edit-statuts button.s-visite.actif {
+  background: var(--visite);
+}
+.edit-statuts button.s-prevu.actif {
+  background: var(--prevu);
+}
+.edit-statuts button.s-avisiter.actif {
+  background: var(--sourdine);
+}
+.edit-champ {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+.edit-enreg {
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--visite);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.edit-enreg:disabled {
+  background: var(--a-visiter);
+  cursor: not-allowed;
+}
+.edit-msg {
+  font-size: 12px;
+  margin-top: 6px;
+  min-height: 15px;
+}
+.edit-msg.ok {
+  color: var(--visite);
+}
+.edit-msg.ko {
+  color: #b91c1c;
+}
+
+@media (max-width: 780px) {
+  .app {
+    flex-direction: column;
+  }
+  #panneau {
+    width: auto;
+    flex: 0 0 auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--bordure);
+    max-height: 48vh;
+  }
+}

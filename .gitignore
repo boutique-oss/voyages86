@@ -1,7 +1,20 @@
-# Dépendances régénérables (npm install @etalab/decoupage-administratif)
+# Next.js / Node
 node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# Variables d'environnement — secrets (DATABASE_URL, APP_PASSWORD). NE JAMAIS commiter.
+.env
+.env.local
+.env*.local
+
+# Dépendances régénérables (npm install @etalab/decoupage-administratif)
 data/package/
 data/dec.tgz
+
+# Plugin MCPmarket : contient un token API en clair dans .mcp.json — ne jamais commiter
+mcpmarket-my-toolkit/
 
 # Fichiers temporaires LibreOffice / Excel
 .~lock.*#
