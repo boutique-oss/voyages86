@@ -7,10 +7,12 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { neon } from "@neondatabase/serverless";
-import "dotenv/config";
+import dotenv from "dotenv";
 
 const ici = dirname(fileURLToPath(import.meta.url));
 const racine = join(ici, "..");
+// Next.js lit .env.local, mais un script Node ne le fait pas seul : on le charge.
+dotenv.config({ path: join(racine, ".env.local") });
 
 if (!process.env.DATABASE_URL) {
   console.error("DATABASE_URL manquante (à mettre dans .env.local).");
